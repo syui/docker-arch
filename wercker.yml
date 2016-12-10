@@ -1,0 +1,10 @@
+box: wercker-labs/docker
+build:
+  steps:
+    - script:
+        name: docker build
+        code: docker build -t arch ./docker/arch
+    - script:
+        name: run system test
+        code: |
+            sudo docker run -workdir="/tmp/arch" arch uname -a
