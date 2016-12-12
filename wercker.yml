@@ -1,10 +1,15 @@
-box: wercker-labs/docker
+box: syui/docker-arch
 build:
   steps:
     - script:
-        name: docker build
-        code: docker build -t arch ./docker/arch
-    - script:
-        name: run system test
+        name: check version
         code: |
-            sudo docker run -workdir="/tmp/arch" arch uname -a
+                uname -a
+deploy:
+  steps:
+    - internal/docker-push:
+        username: $USERNAME
+        password: $PASSWORD
+        tag: test
+        repository: syui/docker-arch
+        registry: https://hub.docker.com/r/syui/docker-arch
